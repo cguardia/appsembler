@@ -7,7 +7,7 @@ CONFIG = """[DEFAULT]
 var = %%(here)s/../var
 
 [instance:pg]
-dsn = dbname='%(name)s' user='postgres' host='%(host)s' password='K47eGq5yeO'
+dsn = dbname='%(name)s' user='%(user)s' host='%(host)s' password='%(password)s'
 repozitory_db_string = postgresql://%(user)s:%(password)s@%(host)s:%(port)s/%(name)s
 """
 
