@@ -1,0 +1,30 @@
+name: karl
+
+mem: 64M
+
+instances: 1
+
+framework:
+    type: python
+    runtime: python27
+
+hooks:
+    post-staging:
+        - virtualenv .
+        - ./bin/python bootstrap.py
+        - ./bin/buildout 
+
+services:
+    postgresql: karltest
+
+processes:
+    web: ./bin/py start_karl.py
+
+ignores:
+    - .git
+    - .pyc
+    - bin
+    - eggs
+    - var
+    - develop-eggs
+    - parts

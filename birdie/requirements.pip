@@ -1,0 +1,8 @@
+pyramid==1.2.7
+SQLAlchemy
+transaction
+repoze.tm2
+zope.sqlalchemy
+repoze.timeago
+cryptacular
+WebError
