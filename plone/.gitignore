@@ -1,0 +1,14 @@
+bin
+lib
+include
+distribute*.gz
+.installed.cfg
+.mr.developer.cfg
+develop-eggs
+eggs
+var
+*.pyc
+*.egg-info
+src
+parts
+.ropeproject
