@@ -1,23 +1,11 @@
-name: plonecms
+name: zope2
 
-mem: 256M
+mem: 64M
 
 instances: 1
 
 framework:
   type: python
-
-requirements:
-  ubuntu:
-      - build-essential
-      - libssl-dev
-      - libxml2-dev
-      - libxslt1-dev
-      - libbz2-dev
-      - libjpeg62-dev
-      - libreadline-gplv2-dev
-      - wv
-      - poppler-utils
 
 hooks:
     pre-staging:
@@ -34,7 +22,7 @@ hooks:
         - ln -s $STACKATO_FILESYSTEM/blobstorage var/blobstorage
 
 services:
-    filesystem: zodb
+    filesystem: datafs
 
 processes:
     web: python2.7 start_plone.py
