@@ -1,30 +1,32 @@
-name: plone
+name: plonecms
 
 mem: 64M
 
 instances: 1
 
 framework:
-    type: python
-    runtime: python27
+  type: python
 
 hooks:
+    pre-staging:
+        - mkdir $STACKATO_FILESYSTEM/filestorage
+        - mkdir $STACKATO_FILESYSTEM/blobstorage
     post-staging:
         - virtualenv .
-        - ./bin/python bootstrap.py
-        - ./bin/buildout 
+        - bin/python bootstrap.py
+        - bin/buildout
+    pre-running:
+        - rm -rf var/filestorage
+        - rm -rf var/blobstorage
+        - ln -s $STACKATO_FILESYSTEM/filestorage var/filestorage
+        - ln -s $STACKATO_FILESYSTEM/blobstorage var/blobstorage
 
 services:
-    postgresql: plonedb
+    filesystem: zodb
 
 processes:
-    web: ./bin/py ./start_plone.py
+    web: python2.7 start_plone.py
 
 ignores:
     - .git
     - .pyc
-    - bin
-    - eggs
-    - var
-    - develop-eggs
-    - parts

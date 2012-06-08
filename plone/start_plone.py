@@ -1,25 +1,17 @@
 import os
 
-import json
+def setup_instance():
+    port = os.getenv('VCAP_APP_PORT', '8080')
+    host = os.getenv('VCAP_APP_HOST', '0.0.0.0')
 
-from paste import httpserver
-from paste.deploy import loadapp
-
-CONFIG = """
-dsn = dbname='%(name)s' user='%(user)s' host='%(host)s' password='%(password)s'
-"""
-
-def setup_dbconfig():
-    vcap_services = json.loads(os.environ['VCAP_SERVICES'])
-    cred = vcap_services.values()[0][0]['credentials']
-
-    dbconfig = CONFIG % cred
-
-    # To do: find the best place to put this
-    dbconfig_file = open('./parts/relstorage?','w')
-    dbconfig_file.write(dbconfig)
-    dbconfig_file.close()
+    instances_file = open('parts/instance/etc/zope.conf')
+    instances_file_content = instances_file.read().replace('PLONE_HTTP_PORT', port)
+    instances_file.close()
+    
+    new_instances_file = open('parts/instance/etc/zope.conf', 'w')
+    new_instances_file.write(instances_file_content)
+    new_instances_file.close()
 
 if __name__ == '__main__':
-    setup_dbconfig()
-    os.execv('./bin/client1', ('fg',))
+    setup_instance()
+    os.execl('bin/instance', 'instance', 'fg')
